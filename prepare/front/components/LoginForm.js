@@ -7,11 +7,15 @@ const ButtonWrapper = styled.div`
     margin-top: 10px;
 `;
 
+const FormWrapper = styled(Form)`
+    padding: 10px;
+`;
+
 //styled-components를 사용하지 않을경우 리랜더를 안하기위해 useMemo사용.
 //const style = useMemo(() => { marginTop: 10 });
 
 
-const LoginForm = () => {
+const LoginForm = ({ setIsLoggedIn }) => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
 
@@ -23,8 +27,13 @@ const LoginForm = () => {
         setPassword(e.target.value);
     }, []);
 
+    const onSubmitForm = useCallback(() => {
+        console.log(id, password);
+        setIsLoggedIn(true);
+    }, [id, password]);
+
     return (
-        <Form>
+        <FormWrapper onFinish={onSubmitForm}>
             <div>
                 <label htmlFor="user-id">아이디</label>
                 <br />
@@ -39,7 +48,7 @@ const LoginForm = () => {
                 <Button type="primary" htmlType="submit" loading={false}>로그인</Button>
                 <Link href="/signup"><a><Button>회원가입</Button></a></Link>
             </ButtonWrapper>
-        </Form>
+        </FormWrapper>
     );
 }
 
