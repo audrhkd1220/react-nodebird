@@ -9,6 +9,7 @@
   "author": "wsJeong",
   "license": "ISC",
   "dependencies": {
+    "@ant-design/compatible": "^5.1.1",
     "@ant-design/icons": "^4.8.0",
     "antd": "^5.0.3",
     "next": "^9.5.5",

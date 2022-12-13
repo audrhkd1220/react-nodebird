@@ -13,7 +13,7 @@ export const initialState = {
         }, {
             src: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Ftheqoo.net%2Fsquare%2F1782897478&psig=AOvVaw00RmEHIQRfkMjrnoA26swP&ust=1670851354701000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCOD7rb_U8fsCFQAAAAAdAAAAABAQ',
         }],
-        Commentts: [{
+        Comments: [{
             User: {
                 nickname: 'nero',
             },
