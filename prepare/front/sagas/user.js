@@ -11,7 +11,7 @@ function* logIn(action) {
         yield delay(1000);
         yield put({
             type: 'LOG_IN_SUCCESS',
-            //data: result.data,
+            data: action.data,
         });
     } catch (err) {
         yield put({
@@ -31,7 +31,6 @@ function* logOut() {
         //const result = yield call(logOutAPI);
         yield put({
             type: 'LOG_OUT_SUCCESS',
-            //data: result.data,
         });
     } catch (err) {
         yield put({

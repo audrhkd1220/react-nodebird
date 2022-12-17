@@ -9,16 +9,17 @@ export const initialState = {
 
 export const loginRequestAction = (data) => {
     return {
-        type: 'LOG_IN',
+        type: 'LOG_IN_REQUEST',
         data,
     };
 }
 
 export const logoutRequestAction = () => {
     return {
-        type: 'LOG_OUT',
+        type: 'LOG_OUT_REQUEST',
     };
 }
+
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
@@ -27,7 +28,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isLoggingIn: true,
             };
-        case 'LOG_IN_SUCCES':
+        case 'LOG_IN_SUCCESS':
             return {
                 ...state,
                 isLoggingIn: false,
@@ -45,7 +46,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isLoggingOut: true,
             };
-        case 'LOG_OUT_SUCCES':
+        case 'LOG_OUT_SUCCESS':
             return {
                 ...state,
                 isLoggingOut: false,
