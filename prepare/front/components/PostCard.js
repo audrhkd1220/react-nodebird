@@ -36,7 +36,7 @@ const PostCard = ({ post }) => {
                             ? (
                                 <>
                                     <Button>수정</Button>
-                                    <Button type="danger">삭제</Button>
+                                    <Button type="primary" danger="true">삭제</Button>
                                 </>
                             ) 
                             : <Button>신고</Button>}
