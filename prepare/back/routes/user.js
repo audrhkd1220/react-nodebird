@@ -1,8 +1,43 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const { User } = require('../models');
+const passport =require('passport');
+const { User, Post } = require('../models');
 
 const router = express.Router();
+
+router.post('/login', (req, res, next) => { // POST /user/login
+    passport.authenticate('local', (err, user, info) => {  
+        if(err) { //서버쪽 에러
+            console.error(err);
+            return next(err);
+        }
+        if(info) {
+            return res.status(401).send(info.reason); //401은 허가되지 않음을 뜻함 보통 로그인에서 많이 사용함
+        }
+        return req.login(user, async (loginErr) => {
+            if(loginErr) { //passport 로그인 에러
+                console.error(loginErr);
+                return next(loginErr);
+            }
+            const fullUserWithoutPassword = await User.findOne({ //비밀번호를 제외한 모든 정보들을 다 집어넣은 유저
+                where: { id: user.id },
+                attributes: { //원하는것만 제외해서 추출할때
+                    exclude: ['password']
+                },//['id', 'nickname', 'email'], 원하는 부분만 추출할때
+                include: [{
+                    model: Post,
+                }, {
+                    model: User,
+                    as: 'Followings',
+                }, {
+                    model: User,
+                    as: 'Followers',
+                }]
+            })
+            return res.status(200).json(fullUserWithoutPassword);
+        });
+    })(req, res, next); //미들웨어 확장방법! 찾아보자..
+});
 
 router.post('/', async (req, res, next) => { // POST /user/
     try {
@@ -27,5 +62,13 @@ router.post('/', async (req, res, next) => { // POST /user/
         next(error); //에러들이 한방에 처리된다..? status 500
     }
 });
+
+
+router.post('/user/logout', (req, res, next) => {
+    req.logout();
+    req.session.destroy();
+    res.send('ok');
+});
+
 
 module.exports = router;
