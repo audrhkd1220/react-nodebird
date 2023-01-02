@@ -20,6 +20,11 @@ db.sequelize.sync()
 
 passportConfig();
 
+app.use(cors({
+    origin: '*',
+    //credentials: true,
+})); //cors해결방법 2 라이브러리사용
+
 //아래 두개의 문장(req.body에 값을 넣는)의 위치는 꼭 여기!
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -48,12 +53,15 @@ app.get('/posts', (req, res) => {
     ]);
 });
 
-app.use(cors({
-    origin: '*',
-    credentials: false,
-})); //cors해결방법 2 라이브러리사용
 app.use('/post', postRouter);
 app.use('/user', userRouter);
+
+//여기서 기본적인 에러처리를 미들웨어를 변경 할 수 있다.
+/*
+app.use((err, req, res, next) => {
+
+});
+*/
 
 app.listen(3065, () => {
     console.log('서버 실행 중!!');
